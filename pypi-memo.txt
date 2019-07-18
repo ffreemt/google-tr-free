@@ -1,5 +1,6 @@
 https://medium.com/@joel.barmettler/how-to-upload-your-python-package-to-pypi-65edc5fe9c56
 
-git pull origin master
+    # https://stackoverflow.com/questions/32056324/there-is-no-tracking-information-for-the-current-branch
+    git pull origin master
 
 python setup.py sdist
