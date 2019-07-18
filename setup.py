@@ -22,6 +22,7 @@ setup(
     version=version,
     description=description,
     long_description=long_description,
+    long_description_content_type='text/markdown'，
     keywords=['machine translation', 'free', 'scraping', ],
     author="mikeee",
     url=f'http://github.com/ffreemt/{name}',
