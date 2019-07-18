@@ -1,0 +1,8 @@
+README.md
+setup.py
+google_tr/__init__.py
+google_tr/google_tr.py
+google_tr_free.egg-info/PKG-INFO
+google_tr_free.egg-info/SOURCES.txt
+google_tr_free.egg-info/dependency_links.txt
+google_tr_free.egg-info/top_level.txt
