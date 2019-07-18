@@ -1,6 +1,6 @@
 # google-tr-free
 
-Sogou translate for free -- local cache plus throttling. Let's hope it lasts.
+Google translate for free -- local cache plus throttling. Let's hope it lasts.
 
 ### Install
 * Install (pip or whatever) necessary requirements, e.g. ```
