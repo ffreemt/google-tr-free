@@ -6,9 +6,10 @@ Home-page: http://github.com/ffreemt/google-tr-free
 Author: mikeee
 Author-email: UNKNOWN
 License: MIT License
+Download-URL: https://github.com/ffreemt/google-tr-free/archive/v_001.tar.gz
 Description: # google-tr-free
         
-        Sogou translate for free -- local cache plus throttling. Let's hope it lasts.
+        Google translate for free -- local cache plus throttling. Let's hope it lasts.
         
         ### Install
         * Install (pip or whatever) necessary requirements, e.g. ```
@@ -32,9 +33,11 @@ Description: # google-tr-free
         
         * Thanks to everyone whose code was used
         
-Keywords: 'machine translation' free scraping
+Keywords: machine translation,free,scraping
 Platform: UNKNOWN
-Classifier: Intended Audience :: Users
-Classifier: Programming Language :: Python
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 3
 Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
 Classifier: License :: OSI Approved :: MIT License

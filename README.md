@@ -3,6 +3,11 @@
 Google translate for free -- local cache plus throttling. Let's hope it lasts.
 
 ### Install
+
+```pip install google-tr-free```
+
+or
+
 * Install (pip or whatever) necessary requirements, e.g. ```
 pip install requests_cache js2py``` or ```
 pip -r requirements.txt```
