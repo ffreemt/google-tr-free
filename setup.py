@@ -22,8 +22,7 @@ setup(
     version=version,
     description=description,
     long_description=long_description,
-    keywords=['machine translation', 'free',  'scraping', ],
-    install_requires
+    keywords=['machine translation', 'free', 'scraping', ],
     author="mikeee",
     url=f'http://github.com/ffreemt/{name}',
     download_url='https://github.com/ffreemt/google-tr-free/archive/v_001.tar.gz',
@@ -31,7 +30,7 @@ setup(
         'requests',
         'requests_cache',
         'js2py',
-      ],
+    ],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
