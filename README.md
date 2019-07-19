@@ -12,7 +12,7 @@ or
 pip install requests_cache js2py``` or ```
 pip install -r requirements.txt```
 * Drop the file google_tr.py in any folder in your PYTHONPATH (check with import sys; print(sys.path)
-* or clone the repo (e.g., ```git clone git@github.com:ffreemt/google-tr-free.git``` or download https://github.com/ffreemt/google-tr-free/archive/master.zip and unzip) and change to the google-tr-free folder and do a ```
+* or clone the repo (e.g., ```git clone git@github.com/ffreemt/google-tr-free.git``` or download https://github.com/ffreemt/google-tr-free/archive/master.zip and unzip) and change to the google-tr-free folder and do a ```
 python setup.py develop```
 
 ### Usage
