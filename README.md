@@ -2,7 +2,7 @@
 
 Google translate for free -- local cache plus throttling. Let's hope it lasts.
 
-### Install
+### Installation
 
 ```pip install google-tr-free```
 
