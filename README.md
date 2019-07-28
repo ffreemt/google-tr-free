@@ -1,6 +1,6 @@
 # google-tr-free
 
-Google translate for free -- local cache plus throttling. Let's hope it lasts.
+Google translate for free -- local cache and throttling (averag 1.5 calls/s, first 1000 calls exempted).. Let's hope it lasts.
 
 ### Installation
 

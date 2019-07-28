@@ -4,14 +4,22 @@ google translate for free
 '''
 # pylint: disable=line-too-long, broad-except
 
+import logging
 from pathlib import Path
+from time import sleep
+from random import random
 
-import requests
 import js2py
 
 import requests_cache
 
-CACHE_NAME = (Path().home() / Path(__file__).stem).as_posix()
+LOGGER = logging.getLogger(__name__)
+LOGGER.addHandler(logging.NullHandler())
+
+HOME_FOLDER = Path.home()
+__FILE__ = globals().get('__file__') or 'test'
+CACHE_NAME = (Path(HOME_FOLDER) / (Path(__FILE__)).stem).as_posix()
+EXPIRE_AFTER = 3600
 
 requests_cache.configure(cache_name=CACHE_NAME, expire_after=36000)  # 10 hrs
 
@@ -60,8 +68,54 @@ GEN_TOKEN = js2py.eval_js(TL)
 
 HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:23.0) Gecko/20100101 Firefox/23.0'}
 
-SESS = requests.Session()
-SESS.get(URL)
+
+def make_throttle_hook(timeout=0.67, exempt=1000):
+    """
+    Returns a response hook function which sleeps for `timeout` seconds if
+    response is not cached
+
+    the first exempt calls exempted from throttling
+    """
+
+    try:
+        timeout = float(timeout)
+    except Exception as _:
+        timeout = .67
+
+    try:
+        exempt = int(exempt)
+    except Exception as _:
+        exempt = 100
+
+    def hook(response, *args, **kwargs):  # pylint: disable=unused-argument
+        if not getattr(response, 'from_cache', False):
+            timeout_ = timeout + random() - 0.5
+            timeout_ = max(0, timeout_)
+
+            try:
+                hook.flag
+            except AttributeError:
+                hook.flag = -1
+            finally:
+                hook.flag += 1
+                quo, _ = divmod(hook.flag, exempt)
+            # quo is 0 only for the first exempt calls
+
+            LOGGER.debug('avg delay: %s, sleeping %s s, flag: %s', timeout, timeout_, bool(quo))
+
+            # will not sleep (timeout_ * bool(quo)=0) for the first exempt calls
+            sleep(timeout_ * bool(quo))
+
+        return response
+    return hook
+
+SESS = requests_cache.CachedSession(
+    cache_name=CACHE_NAME,
+    expire_after=EXPIRE_AFTER,
+    allowable_methods=('GET', 'POST'),
+)
+
+SESS.hooks = {'response': make_throttle_hook()}
 
 
 def google_tr(content, from_lang='auto', to_lang='zh-CN', cache=True):

@@ -9,10 +9,10 @@ from setuptools import setup, find_packages
 
 name = """google-tr-free"""
 # description = ' '.join(name.split('-'))
-description = name.replace('-tr-', 'translate for')
+description = name.replace('-tr-', ' translate for ')
 dir_name, = find_packages()
 
-version, = re.findall(r"__version__\W*=\W*'([^']+)'", open(Path(__file__).parent / f'{dir_name}/__init__.py').read())
+version, = re.findall(r"\n__version__\W*=\W*'([^']+)'", open(Path(__file__).parent / f'{dir_name}/__init__.py').read())
 
 README_rst = f'{Path(__file__).parent}/README.md'
 long_description = open(README_rst, encoding='utf-8').read() if Path(README_rst).exists() else ''
@@ -23,7 +23,7 @@ setup(
     version=version,
     description=description,
     long_description=long_description,
-    long_description_content_type='text/markdown'，
+    long_description_content_type='text/markdown',
     keywords=['machine translation', 'free', 'scraping', ],
     author="mikeee",
     url=f'http://github.com/ffreemt/{name}',
