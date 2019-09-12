@@ -9,9 +9,9 @@ from pathlib import Path
 from time import sleep
 from random import random
 
-import js2py
+import js2py  # type: ignore
 
-import requests_cache
+import requests_cache  # type: ignore
 
 LOGGER = logging.getLogger(__name__)
 LOGGER.addHandler(logging.NullHandler())
@@ -26,43 +26,43 @@ requests_cache.configure(cache_name=CACHE_NAME, expire_after=36000)  # 10 hrs
 URL = 'http://translate.google.cn/translate_a/single'
 
 TL = \
-"""function RL(a, b) {
-    var t = "a";
-    var Yb = "+";
-    for (var c = 0; c < b.length - 2; c += 3) {
-        var d = b.charAt(c + 2),
-        d = d >= t ? d.charCodeAt(0) - 87 : Number(d),
-        d = b.charAt(c + 1) == Yb ? a >>> d: a << d;
-        a = b.charAt(c) == Yb ? a + d & 4294967295 : a ^ d
+    """function RL(a, b) {
+        var t = "a";
+        var Yb = "+";
+        for (var c = 0; c < b.length - 2; c += 3) {
+            var d = b.charAt(c + 2),
+            d = d >= t ? d.charCodeAt(0) - 87 : Number(d),
+            d = b.charAt(c + 1) == Yb ? a >>> d: a << d;
+            a = b.charAt(c) == Yb ? a + d & 4294967295 : a ^ d
+        }
+        return a
     }
-    return a
-}
-    function TL(a) {
-    var k = "";
-    var b = 406644;
-    var b1 = 3293161072;
+        function TL(a) {
+        var k = "";
+        var b = 406644;
+        var b1 = 3293161072;
 
-    var jd = ".";
-    var $b = "+-a^+6";
-    var Zb = "+-3^+b+-f";
+        var jd = ".";
+        var $b = "+-a^+6";
+        var Zb = "+-3^+b+-f";
 
-    for (var e = [], f = 0, g = 0; g < a.length; g++) {
-        var m = a.charCodeAt(g);
-        128 > m ? e[f++] = m : (2048 > m ? e[f++] = m >> 6 | 192 : (55296 == (m & 64512) && g + 1 < a.length && 56320 == (a.charCodeAt(g + 1) & 64512) ? (m = 65536 + ((m & 1023) << 10) + (a.charCodeAt(++g) & 1023),
-        e[f++] = m >> 18 | 240,
-        e[f++] = m >> 12 & 63 | 128) : e[f++] = m >> 12 | 224,
-        e[f++] = m >> 6 & 63 | 128),
-        e[f++] = m & 63 | 128)
-    }
-    a = b;
-    for (f = 0; f < e.length; f++) a += e[f],
-    a = RL(a, $b);
-    a = RL(a, Zb);
-    a ^= b1 || 0;
-    0 > a && (a = (a & 2147483647) + 2147483648);
-    a %= 1E6;
-    return a.toString() + jd + (a ^ b)
-};"""
+        for (var e = [], f = 0, g = 0; g < a.length; g++) {
+            var m = a.charCodeAt(g);
+            128 > m ? e[f++] = m : (2048 > m ? e[f++] = m >> 6 | 192 : (55296 == (m & 64512) && g + 1 < a.length && 56320 == (a.charCodeAt(g + 1) & 64512) ? (m = 65536 + ((m & 1023) << 10) + (a.charCodeAt(++g) & 1023),
+            e[f++] = m >> 18 | 240,
+            e[f++] = m >> 12 & 63 | 128) : e[f++] = m >> 12 | 224,
+            e[f++] = m >> 6 & 63 | 128),
+            e[f++] = m & 63 | 128)
+        }
+        a = b;
+        for (f = 0; f < e.length; f++) a += e[f],
+        a = RL(a, $b);
+        a = RL(a, Zb);
+        a ^= b1 || 0;
+        0 > a && (a = (a & 2147483647) + 2147483648);
+        a %= 1E6;
+        return a.toString() + jd + (a ^ b)
+    };"""
 
 GEN_TOKEN = js2py.eval_js(TL)
 
@@ -108,6 +108,7 @@ def make_throttle_hook(timeout=0.67, exempt=1000):
 
         return response
     return hook
+
 
 SESS = requests_cache.CachedSession(
     cache_name=CACHE_NAME,
@@ -168,19 +169,23 @@ def google_tr(content, from_lang='auto', to_lang='zh-CN', cache=True):
         res = str(exc)
 
     google_tr.dual = res
+
+    if to_lang in ['zh-CN', 'zh']:
+        return ''.join([str(elm[0]) for elm in res])
+
     return ' '.join([str(elm[0]) for elm in res])
 
 
 def test_0():
     ''' test 0'''
     text = \
-    '''There is now some uncertainty about the future of Google News in Europe after the European Union finalized its controversial new copyright legislation.
+        '''There is now some uncertainty about the future of Google News in Europe after the European Union finalized its controversial new copyright legislation.
 
-    Google had previously showed how dramatically its search results could be affected, and warned that it may shut down the service in Europe …
+        Google had previously showed how dramatically its search results could be affected, and warned that it may shut down the service in Europe …
 
-    The EU Copyright Directive is well-intentioned, requiring tech giants to license the right to reproduce copyrighted material on their own websites. However, the legislation as originally proposed would have made it impossible for Google to display brief snippets and photos from news stories in its search results without paying the news sites.
+        The EU Copyright Directive is well-intentioned, requiring tech giants to license the right to reproduce copyrighted material on their own websites. However, the legislation as originally proposed would have made it impossible for Google to display brief snippets and photos from news stories in its search results without paying the news sites.
 
-    Google last month showed how its news search results would appear without photos and text excerpts, rendering the service all but useless. The company had previously said that its only option might be to shut down Google News in Europe.'''
+        Google last month showed how its news search results would appear without photos and text excerpts, rendering the service all but useless. The company had previously said that its only option might be to shut down Google News in Europe.'''
     trtext = google_tr(text)
     assert len(google_tr.dual) == 6
     assert len(trtext) > 200

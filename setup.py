@@ -16,6 +16,10 @@ version, = re.findall(r"\n__version__\W*=\W*'([^']+)'", open(Path(__file__).pare
 
 README_rst = f'{Path(__file__).parent}/README.md'
 long_description = open(README_rst, encoding='utf-8').read() if Path(README_rst).exists() else ''
+if Path('requirements.txt').exists():
+    install_requires = [elm.split()[0] for elm in Path('requirements.txt').read_text(encoding='utf-8').split('\n')]
+else:
+    install_requires = []
 
 setup(
     name=name,
@@ -28,11 +32,7 @@ setup(
     author="mikeee",
     url=f'http://github.com/ffreemt/{name}',
     download_url='https://github.com/ffreemt/google-tr-free/archive/v_001.tar.gz',
-    install_requires=[
-        'requests',
-        'requests_cache',
-        'js2py',
-    ],
+    install_requires=install_requires,
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
