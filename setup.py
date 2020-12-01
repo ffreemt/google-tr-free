@@ -16,10 +16,14 @@ version, = re.findall(r"\n__version__\W*=\W*'([^']+)'", open('%s/__init__.py' % 
 
 README_rst = '%s/README.md' % Path(__file__).parent
 long_description = open(README_rst, encoding='utf-8').read() if Path(README_rst).exists() else ''
+
+_ = """
 if Path('requirements.txt').exists():
     install_requires = [elm.split()[0] for elm in Path('requirements.txt').read_text(encoding='utf-8').split('\n')]
 else:
     install_requires = []
+# """
+install_requires = ['requests', 'requests_cache', 'js2py']
 
 setup(
     name=name,

@@ -189,3 +189,14 @@ def test_0():
     trtext = google_tr(text)
     assert len(google_tr.dual) == 6
     assert len(trtext) > 200
+
+def main():
+    ''' main '''
+    import sys
+    from random import randint
+
+    args = sys.args[1:]
+    if not args:
+        args = ['test ' + str(randint(1, 10000)), 'en', 'zh']
+
+    print(sogou_tr(*args))
