@@ -4,7 +4,7 @@ Google translate for free -- local cache and throttling (averag 1.5 calls/s, fir
 
 ### Installation
 
-```pip install google-tr-free```
+```pip install -U google-tr-free```
 
 or
 
